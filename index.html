@@ -1,273 +1,664 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>FixMyCity</title>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Font Awesome Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    >
 </head>
 
 <body>
 
-    <!-- Navigation Bar: kept unchanged -->
-    <nav>
-        <div class="logo">FixMyCity</div>
+    <!-- ================= NAVIGATION BAR ================= -->
 
-        <div class="nav-links">
-            <button onclick="showPage('home')">Home</button>
-            <button onclick="showPage('report')">Report Issue</button>
-            <button onclick="showPage('reports')">My Reports</button>
-            <button onclick="showPage('admin')">Admin</button>
+    <nav>
+    
+        <div class="logo" onclick="showPage('home')">
+            FixMyCity
         </div>
+    
+        <div class="nav-links">
+    
+            <button onclick="showPage('home')">
+                Home
+            </button>
+    
+            <button onclick="showPage('report')">
+                Report Issue
+            </button>
+    
+            <button onclick="showPage('reports')">
+                My Reports
+            </button>
+    
+    
+            <!-- LOGIN DROPDOWN -->
+            <div class="login-dropdown">
+    
+                <button class="login-btn" id="loginToggle" type="button">
+                    Login
+                    <span class="dropdown-arrow">⌄</span>
+                </button>
+    
+                <div class="login-menu" id="loginMenu">
+    
+                    <button type="button" onclick="showPage('reports'); closeLoginMenu();">
+                        <i class="fa fa-user"></i>
+                        Citizen Login
+                    </button>
+    
+                    <button type="button" onclick="showPage('admin'); closeLoginMenu();">
+                        <i class="fa fa-shield"></i>
+                        Admin Login
+                    </button>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
     </nav>
 
-    <!-- HOME PAGE -->
+
+    <!-- ================= HOME PAGE ================= -->
+
     <section id="home" class="page active">
 
-        <!-- HERO SECTION -->
+
+        <!-- ================= HERO SECTION ================= -->
+
         <section class="hero-section">
+
             <div class="hero-overlay"></div>
 
+
             <div class="hero-content">
+
                 <div class="hero-badge">
+
                     <span class="status-dot"></span>
+
                     Civic Issue Reporting Platform
+
                 </div>
+
 
                 <h1>
                     Together, We Build a
                     <span>Better City.</span>
                 </h1>
 
+
                 <p>
                     Report civic problems, track their progress, and help make
                     your city cleaner, safer and better for everyone.
                 </p>
 
+
                 <div class="hero-buttons">
-                    <button class="hero-primary" id="heroReportBtn">
-                        Report an Issue <span>→</span>
+
+                    <button
+                        class="hero-primary"
+                        id="heroReportBtn"
+                        type="button"
+                    >
+                        Report an Issue
+                        <span>→</span>
                     </button>
 
-                    <button class="hero-secondary" id="heroExploreBtn">
+
+                    <button
+                        class="hero-secondary"
+                        id="heroExploreBtn"
+                        type="button"
+                    >
                         Explore Reports
                     </button>
+
                 </div>
+
             </div>
 
+
+            <!-- Decorative Elements -->
+
             <div class="hero-orb orb-1"></div>
+
             <div class="hero-orb orb-2"></div>
+
             <div class="hero-grid"></div>
+
         </section>
 
-        <!-- CITY STATISTICS -->
+
+
+        <!-- ================= CITY STATISTICS ================= -->
+
         <section class="city-stats-section">
+
             <div class="stats-container">
 
+
                 <div class="stats-intro">
-                    <span class="section-label">CITY ACTIVITY</span>
+
+                    <span class="section-label">
+                        CITY ACTIVITY
+                    </span>
+
 
                     <h2>
                         Making Every Report
                         <span>Count.</span>
                     </h2>
 
+
                     <p>
                         Track the impact of citizens reporting issues
                         and authorities resolving them.
                     </p>
+
                 </div>
+
+
 
                 <div class="stats-grid">
 
+
+                    <!-- TOTAL REPORTS -->
+
                     <div class="stat-card total-card">
+
                         <div class="stat-icon">
-                            <i class="fa-regular fa-file-lines"></i>
+                            <i class="fa fa-file-text-o"></i>
                         </div>
+
+
                         <div class="stat-info">
+
                             <span>Total Reports</span>
-                            <strong id="totalReports">0</strong>
+
+                            <strong id="totalReports">
+                                0
+                            </strong>
+
                         </div>
+
                     </div>
+
+
+
+                    <!-- REPORTED -->
 
                     <div class="stat-card reported-card">
+
                         <div class="stat-icon">
-                            <i class="fa-solid fa-bullhorn"></i>
+                            <i class="fa fa-bullhorn"></i>
                         </div>
+
+
                         <div class="stat-info">
+
                             <span>Reported</span>
-                            <strong id="reportedCount">0</strong>
+
+                            <strong id="reportedCount">
+                                0
+                            </strong>
+
                         </div>
+
                     </div>
+
+
+
+                    <!-- PENDING -->
 
                     <div class="stat-card pending-card">
+
                         <div class="stat-icon">
-                            <i class="fa-regular fa-clock"></i>
+                            <i class="fa fa-clock-o"></i>
                         </div>
+
+
                         <div class="stat-info">
+
                             <span>Pending</span>
-                            <strong id="pendingCount">0</strong>
+
+                            <strong id="pendingCount">
+                                0
+                            </strong>
+
                         </div>
+
                     </div>
+
+
+
+                    <!-- RESOLVED -->
 
                     <div class="stat-card resolved-card">
+
                         <div class="stat-icon">
-                            <i class="fa-solid fa-check"></i>
+                            <i class="fa fa-check"></i>
                         </div>
+
+
                         <div class="stat-info">
+
                             <span>Resolved</span>
-                            <strong id="resolvedCount">0</strong>
+
+                            <strong id="resolvedCount">
+                                0
+                            </strong>
+
                         </div>
+
                     </div>
 
+
                 </div>
+
             </div>
+
         </section>
+
 
     </section>
 
-    <!-- REPORT ISSUE PAGE: kept intact -->
+
+
+    <!-- ================= REPORT ISSUE PAGE ================= -->
+
     <section id="report" class="page">
+
         <div class="form-container">
-            <h2>Report a Civic Issue</h2>
+
+            <h2>
+                Report a Civic Issue
+            </h2>
+
 
             <form id="issueForm">
 
-                <label>Issue Title</label>
+
+                <!-- ISSUE TITLE -->
+
+                <label for="title">
+                    Issue Title
+                </label>
+
                 <input
                     type="text"
                     id="title"
-                    placeholder="Example: Broken Streetlight"
+                    placeholder="Type issue here..."
                     required
                 >
 
-                <label>Category</label>
+
+
+                <!-- CATEGORY -->
+
+                <label for="category">
+                    Category
+                </label>
+
                 <select id="category" required>
-                    <option value="">Select Category</option>
-                    <option value="Road">Road</option>
-                    <option value="Garbage">Garbage</option>
-                    <option value="Streetlight">Streetlight</option>
-                    <option value="Water">Water Problem</option>
-                    <option value="Other">Other</option>
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Road">
+                        Road
+                    </option>
+
+                    <option value="Garbage">
+                        Garbage
+                    </option>
+
+                    <option value="Streetlight">
+                        Streetlight
+                    </option>
+
+                    <option value="Water">
+                        Water Problem
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
                 </select>
 
-                <label>Description</label>
+
+
+                <!-- DESCRIPTION -->
+
+                <label for="description">
+                    Description
+                </label>
+
                 <textarea
                     id="description"
                     placeholder="Describe the problem..."
                     required
                 ></textarea>
 
-                <label>Location</label>
+
+
+                <!-- LOCATION -->
+
+                <label for="location">
+                    Location
+                </label>
+
                 <input
                     type="text"
                     id="location"
-                    placeholder="Example: MG Road, Indore"
+                    placeholder="Choose your location"
                     required
                 >
 
-                <label>Upload Image</label>
+
+
+                <!-- IMAGE -->
+
+                <label for="image">
+                    Upload Image
+                </label>
+
                 <input
                     type="file"
                     id="image"
                     accept="image/*"
                 >
 
-                <button type="submit" class="primary-btn">
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
                     Submit Issue
                 </button>
 
             </form>
+
         </div>
+
     </section>
 
-    <!-- MY REPORTS PAGE -->
+
+
+    <!-- ================= MY REPORTS PAGE ================= -->
+
     <section id="reports" class="page">
-        <div class="container">
-            <h2>My Reported Issues</h2>
 
-            <div id="reportsList" class="issues-grid">
+        <div class="container">
+
+            <h2>
+                My Reported Issues
+            </h2>
+
+            <p>
+                Track the current status of your reported civic issues.
+            </p>
+
+
+            <div
+                id="reportsList"
+                class="issues-grid"
+            >
+
                 <!-- JavaScript will add issues here -->
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- ADMIN PAGE -->
+
+
+    <!-- ================= ADMIN PAGE ================= -->
+
     <section id="admin" class="page">
-        <div class="container">
-            <h2>Authority Dashboard</h2>
-            <p>Manage all reported civic issues.</p>
 
-            <div id="adminIssues" class="issues-grid">
+        <div class="container">
+
+            <h2>
+                Authority Dashboard
+            </h2>
+
+
+            <p>
+                Manage all reported civic issues.
+            </p>
+
+
+            <div
+                id="adminIssues"
+                class="issues-grid"
+            >
+
                 <!-- JavaScript will add admin issues here -->
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- FOOTER -->
+
+
+    <!-- ================= FOOTER ================= -->
+
     <footer class="fixmycity-footer">
+
+
         <div class="footer-container">
 
+
+            <!-- BRAND -->
+
             <div class="footer-column footer-brand">
-                <h2>Fix<span>My</span>City</h2>
+
+                <h2>
+                    Fix<span>My</span>City
+                </h2>
+
 
                 <p>
-                    A platform that connects citizens with local authorities
-                    to make cities better, one report at a time.
+                    A platform that connects citizens with local
+                    authorities to make cities better, one report at a time.
                 </p>
 
+
                 <div class="footer-socials">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+
+
+                    <a href="#" aria-label="Twitter">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+
+
+                    <a href="#" aria-label="Instagram">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+
+
+                    <a href="#" aria-label="LinkedIn">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+
                 </div>
+
             </div>
 
-            <div class="footer-column">
-                <h3>Platform</h3>
-                <a href="#" onclick="showPage('home'); return false;">Home</a>
-                <a href="#" onclick="showPage('report'); return false;">Report Issue</a>
-                <a href="#" onclick="showPage('reports'); return false;">View Reports</a>
-                <a href="#">How It Works</a>
-            </div>
+
+
+            <!-- PLATFORM -->
 
             <div class="footer-column">
-                <h3>Issue Categories</h3>
-                <a href="#">Road Damage</a>
-                <a href="#">Garbage</a>
-                <a href="#">Water Leakage</a>
-                <a href="#">Streetlights</a>
+
+                <h3>
+                    Platform
+                </h3>
+
+
+                <a
+                    href="#"
+                    onclick="showPage('home'); return false;"
+                >
+                    Home
+                </a>
+
+
+                <a
+                    href="#"
+                    onclick="showPage('report'); return false;"
+                >
+                    Report Issue
+                </a>
+
+
+                <a
+                    href="#"
+                    onclick="showPage('reports'); return false;"
+                >
+                    View Reports
+                </a>
+
+
+                <a href="#">
+                    How It Works
+                </a>
+
             </div>
 
+
+
+            <!-- ISSUE CATEGORIES -->
+
             <div class="footer-column">
-                <h3>Stay Connected</h3>
+
+                <h3>
+                    Issue Categories
+                </h3>
+
+
+                <a href="#">
+                    Road Damage
+                </a>
+
+
+                <a href="#">
+                    Garbage
+                </a>
+
+
+                <a href="#">
+                    Water Leakage
+                </a>
+
+
+                <a href="#">
+                    Streetlights
+                </a>
+
+            </div>
+
+
+
+            <!-- CONTACT -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Stay Connected
+                </h3>
+
+
                 <p class="footer-contact-text">
                     Get updates about your reports and city activity.
                 </p>
 
+
                 <div class="footer-email">
-                    <input type="email" placeholder="Your email address">
-                    <button type="button" aria-label="Submit email">→</button>
+
+                    <input
+                        type="email"
+                        placeholder="Your email address"
+                    >
+
+
+                    <button type="button">
+                        →
+                    </button>
+
                 </div>
+
             </div>
 
+
         </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
 
         <div class="footer-bottom">
-            <p>© 2026 FixMyCity. All rights reserved.</p>
+
+            <p>
+                © 2026 FixMyCity. All rights reserved.
+            </p>
+
 
             <div>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Contact</a>
+
+                <a href="#">
+                    Privacy
+                </a>
+
+
+                <a href="#">
+                    Terms
+                </a>
+
+
+                <a href="#">
+                    Contact
+                </a>
+
             </div>
+
         </div>
+
+
     </footer>
 
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
     <script src="script.js"></script>
+
 </body>
+
 </html>

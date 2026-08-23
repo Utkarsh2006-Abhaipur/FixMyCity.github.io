@@ -353,6 +353,26 @@ if (exploreButton) {
         }
     );
 }
+const loginToggle = document.getElementById("loginToggle");
+const loginDropdown = document.querySelector(".login-dropdown");
+
+loginToggle.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    loginDropdown.classList.toggle("active");
+});
+
+document.addEventListener("click", function (event) {
+
+    if (!loginDropdown.contains(event.target)) {
+        loginDropdown.classList.remove("active");
+    }
+
+});
+
+function closeLoginMenu() {
+    loginDropdown.classList.remove("active");
+}
 
 
 // ================================
