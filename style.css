@@ -79,6 +79,9 @@ nav {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.logo img{
+    height:4rem;
+}
 
 .nav-links {
     display: flex;
@@ -845,16 +848,8 @@ background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 
         0.0625rem solid rgba(255, 255, 255, 0.08);
 }
 
-.footer-brand h2 {
-    font-family: "Outfit", sans-serif;
-
-    font-size: 1.875rem;
-
-    margin-bottom: 1.125rem;
-}
-
-.footer-brand h2 span {
-    color: #4ade80;
+.footer-brand img{
+    height:6rem;
 }
 
 .footer-brand p {
