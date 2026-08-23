@@ -18,10 +18,16 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 
-    background:
-        radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.18), transparent 30%),
-        radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.15), transparent 30%),
-        linear-gradient(135deg, #030303 0%, #08080d 50%, #101018 100%);
+    body {
+    font-family: Arial, sans-serif;
+    color: #e5e7eb;
+
+    
+    background-image: url("Hero_section-bg.jpg");
+
+    min-height: 100vh;
+    overflow-x: hidden;
+}
 }
 
 
@@ -129,32 +135,9 @@ nav {
 
     overflow: hidden;
 
-    background:
-        radial-gradient(
-            circle at 12% 18%,
-            rgba(124, 58, 237, 0.35),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            circle at 88% 28%,
-            rgba(37, 99, 235, 0.30),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 50% 90%,
-            rgba(34, 197, 94, 0.12),
-            transparent 32%
-        ),
-
-        linear-gradient(
-            135deg,
-            #020202 0%,
-            #09090f 50%,
-            #101018 100%
-        );
-}
+    background: #2A7B9B;
+        background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+    }
 
 
 /*Hero Section */
@@ -708,12 +691,8 @@ textarea {
 .issue-card {
     padding: 1.5625rem;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.08),
-            rgba(255, 255, 255, 0.025)
-        );
+    background: #2A7B9B;
+background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
 
     backdrop-filter: blur(1.25rem);
 
@@ -851,6 +830,8 @@ textarea {
 
     margin: auto;
 
+    height: 10rem;
+
     display: grid;
 
     grid-template-columns:
@@ -887,7 +868,7 @@ textarea {
 .footer-column h3 {
     font-family: "Outfit", sans-serif;
 
-    font-size: 1rem;
+    font-size: 0.8rem;
 
     margin-bottom: 1.4375rem;
 
@@ -899,7 +880,7 @@ textarea {
 
     width: fit-content;
 
-    margin-bottom: 0.8125rem;
+    margin-bottom: 0.6rem;
 
     color: #a1a1aa;
 
@@ -914,41 +895,6 @@ textarea {
     transform: translateX(0.25rem);
 }
 
-.footer-socials {
-    display: flex;
-
-    gap: 0.625rem;
-
-    margin-top: 1.5625rem;
-}
-
-.footer-socials a {
-    width: 2.5rem;
-    height: 2.5rem;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    margin: 0;
-
-    border-radius: 0.625rem;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    border: 0.0625rem solid rgba(255, 255, 255, 0.08);
-
-    color: #ffffff;
-}
-
-.footer-socials a:hover {
-    background: #16a34a;
-
-    color: #ffffff;
-
-    transform: translateY(-0.1875rem);
-}
 
 .footer-contact-text {
     color: #a1a1aa;
@@ -959,7 +905,7 @@ textarea {
 .footer-email {
     display: flex;
 
-    margin-top: 1.25rem;
+    margin-top: 0.8rem;
 
     background: rgba(255, 255, 255, 0.04);
 
