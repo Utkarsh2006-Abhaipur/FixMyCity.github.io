@@ -41,30 +41,16 @@
                 My Reports
             </button>
     
-    
-            <!-- LOGIN DROPDOWN -->
+            <!-- LOGIN -->
             <div class="login-dropdown">
     
-                <button class="login-btn" id="loginToggle" type="button">
+                <button class="login-btn" type="button" onclick="window.location.href='login.html'">
                     Login
-                    <span class="dropdown-arrow">⌄</span>
+                    <span class="dropdown-arrow">›</span>
                 </button>
     
-                <div class="login-menu" id="loginMenu">
-    
-                    <button type="button" onclick="showPage('reports'); closeLoginMenu();">
-                        <i class="fa fa-user"></i>
-                        Citizen Login
-                    </button>
-    
-                    <button type="button" onclick="showPage('admin'); closeLoginMenu();">
-                        <i class="fa fa-shield"></i>
-                        Admin Login
-                    </button>
-    
-                </div>
-    
             </div>
+    
     
         </div>
     
@@ -618,25 +604,20 @@
 
     </footer>
 
-    <button type="button" id="citizenLoginBtn">
-        <i class="fa fa-user"></i>
-        Citizen Login
-    </button>
 
-    <button type="button" id="adminLoginBtn">
-        <i class="fa fa-shield"></i>
-        Admin Login
+    <button type="button" id="logoutBtn" onclick="logoutUser()">
+        <i class="fa fa-sign-out"></i>
+        Logout
     </button>
 
 
 
-    <!--  JAVASCRIPT  -->
+    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
-    <script type="module" src="firebase.js"></script>
 
-        <script src="script.js"></script>
     <script type="module" src="auth.js"></script>
+
 
 </body>
 

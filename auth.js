@@ -8,211 +8,306 @@ import {
 } from "./firebase.js";
 
 
-const ADMIN_EMAILS = [
-    "utkarshkumarabhaipur@gmail.com"
-];
+// ==========================================
+// FIND LOGIN BUTTONS
+// ==========================================
+
+const citizenLoginBtn =
+    document.getElementById("citizenLoginBtn");
+
+const adminLoginBtn =
+    document.getElementById("adminLoginBtn");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
-const citizenLoginBtn = document.getElementById("citizenLoginBtn");
+// ==========================================
+// CITIZEN LOGIN
+// ==========================================
 
-const adminLoginBtn = document.getElementById("adminLoginBtn");
+if (citizenLoginBtn) {
 
+    citizenLoginBtn.addEventListener(
+        "click",
+        () => {
 
-function setLoginType(type) {
-    sessionStorage.setItem("fixmycityLoginType", type);
-}
+            localStorage.setItem(
+                "userRole",
+                "citizen"
+            );
 
+            signInWithRedirect(
+                auth,
+                googleProvider
+            );
 
-async function startGoogleLogin(type) {
-
-    setLoginType(type);
-
-    try {
-
-        await signInWithRedirect(auth, googleProvider);
-
-    } catch (error) {
-
-        console.error("Google sign-in failed:", error);
-
-        sessionStorage.removeItem("fixmycityLoginType");
-
-        alert("Google sign-in could not be started. Please try again.");
-    }
-}
-
-
-citizenLoginBtn?.addEventListener("click", () => {
-
-    startGoogleLogin("citizen");
-
-});
-
-
-adminLoginBtn?.addEventListener("click", () => {
-
-    startGoogleLogin("admin");
-
-});
-
-
-getRedirectResult(auth).catch((error) => {
-
-    console.error("Google sign-in redirect failed:", error);
-
-    sessionStorage.removeItem("fixmycityLoginType");
-
-    alert("Google sign-in failed. Please try again.");
-
-});
-
-
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) return;
-
-    const loginType =
-        sessionStorage.getItem("fixmycityLoginType");
-
-    console.log(
-        "Signed in:",
-        user.displayName,
-        user.email
+        }
     );
 
-
-    if (loginType === "admin") {
-
-        const email =
-            (user.email || "").toLowerCase();
-
-        const isAdmin =
-            ADMIN_EMAILS
-                .map(value => value.toLowerCase())
-                .includes(email);
+}
 
 
-        if (!isAdmin) {
+// ==========================================
+// ADMIN LOGIN
+// ==========================================
 
-            sessionStorage.removeItem(
-                "fixmycityLoginType"
+if (adminLoginBtn) {
+
+    adminLoginBtn.addEventListener(
+        "click",
+        () => {
+
+            localStorage.setItem(
+                "userRole",
+                "admin"
             );
 
-            await signOut(auth);
-
-            alert(
-                "This Google account is not authorized for Admin Login."
+            signInWithRedirect(
+                auth,
+                googleProvider
             );
 
-            return;
         }
+    );
+
+}
 
 
-        sessionStorage.removeItem(
-            "fixmycityLoginType"
+// ==========================================
+// HANDLE GOOGLE REDIRECT
+// ==========================================
+
+getRedirectResult(auth)
+
+    .then((result) => {
+
+        if (!result) return;
+
+
+        const user = result.user;
+
+        const role =
+            localStorage.getItem(
+                "userRole"
+            );
+
+
+        console.log(
+            "Logged in:",
+            user.email
         );
 
-        window.showPage("admin");
 
+        // Save user information
 
-        if (
-            typeof window.closeLoginMenu === "function"
-        ) {
-
-            window.closeLoginMenu();
-
-        }
-
-        return;
-    }
-
-
-    if (loginType === "citizen") {
-
-        sessionStorage.removeItem(
-            "fixmycityLoginType"
+        localStorage.setItem(
+            "currentUserUid",
+            user.uid
         );
 
-        window.showPage("reports");
+
+        localStorage.setItem(
+            "currentUserEmail",
+            user.email || ""
+        );
 
 
-        if (
-            typeof window.closeLoginMenu === "function"
-        ) {
+        // ==================================
+        // REDIRECT ACCORDING TO ROLE
+        // ==================================
 
-            window.closeLoginMenu();
+        if (role === "citizen") {
+
+            window.location.href =
+                "index.html#report";
 
         }
 
-        return;
+        else if (role === "admin") {
+
+            window.location.href =
+                "index.html#admin";
+
+        }
+
+    })
+
+    .catch((error) => {
+
+        console.error(
+            "Google sign-in failed:",
+            error
+        );
+
+        alert(
+            "Google sign-in failed. Please try again."
+        );
+
+    });
+
+
+// ==========================================
+// CHECK LOGIN STATE
+// ==========================================
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (user) {
+
+            console.log(
+                "User logged in:",
+                user.email
+            );
+
+
+            localStorage.setItem(
+                "currentUserUid",
+                user.uid
+            );
+
+
+            localStorage.setItem(
+                "currentUserEmail",
+                user.email || ""
+            );
+
+
+            // If we are on index.html,
+            // open the correct page
+
+            if (
+                window.location.pathname
+                    .includes("index.html")
+            ) {
+
+                openCorrectPage();
+
+            }
+
+        }
+
     }
-
-});
-
+);
 
 
-window.addEventListener("load", () => {
+// ==========================================
+// OPEN CORRECT PAGE
+// ==========================================
 
-    const originalShowPage =
-        window.showPage;
+function openCorrectPage() {
+
+    const role =
+        localStorage.getItem(
+            "userRole"
+        );
+
+
+    const hash =
+        window.location.hash;
 
 
     if (
-        typeof originalShowPage !== "function"
-    ) return;
+        typeof showPage !== "function"
+    ) {
+        return;
+    }
 
 
-    window.showPage = function(page) {
+    // Admin dashboard
 
-        if (
-            page === "reports" &&
-            !auth.currentUser
-        ) {
+    if (
+        hash === "#admin" &&
+        role === "admin"
+    ) {
 
-            startGoogleLogin("citizen");
+        showPage("admin");
 
-            return;
-        }
+        return;
 
-
-        if (page === "admin") {
-
-            if (!auth.currentUser) {
-
-                startGoogleLogin("admin");
-
-                return;
-            }
+    }
 
 
-            const email =
-                (
-                    auth.currentUser.email || ""
-                ).toLowerCase();
+    // Citizen report page
+
+    if (
+        hash === "#report" &&
+        role === "citizen"
+    ) {
+
+        showPage("report");
+
+        return;
+
+    }
 
 
-            const isAdmin =
-                ADMIN_EMAILS
-                    .map(value =>
-                        value.toLowerCase()
-                    )
-                    .includes(email);
+    // Citizen reports page
+
+    if (
+        hash === "#reports" &&
+        role === "citizen"
+    ) {
+
+        showPage("reports");
+
+        return;
+
+    }
+
+}
 
 
-            if (!isAdmin) {
+// ==========================================
+// LOGOUT
+// ==========================================
 
-                alert(
-                    "Admin access is restricted to authorized accounts."
-                );
+async function logoutUser() {
 
-                return;
-            }
+    try {
 
-        }
+        await signOut(auth);
 
 
-        originalShowPage(page);
+        localStorage.removeItem(
+            "userRole"
+        );
 
-    };
+        localStorage.removeItem(
+            "currentUserUid"
+        );
 
-});
+        localStorage.removeItem(
+            "currentUserEmail"
+        );
+
+
+        window.location.href =
+            "index.html";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Logout failed:",
+            error
+        );
+
+        alert(
+            "Logout failed. Please try again."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// MAKE LOGOUT AVAILABLE
+// ==========================================
+
+window.logoutUser =
+    logoutUser;
