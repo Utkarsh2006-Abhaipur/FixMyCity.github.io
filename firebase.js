@@ -1,19 +1,35 @@
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-T9XRVZ0pIFgbiTeItmmyepaCm7hVGtA",
-    authDomain: "civicreporter-641b9.firebaseapp.com",
-    projectId: "civicreporter-641b9",
-    storageBucket: "civicreporter-641b9.firebasestorage.app",
-    messagingSenderId: "843837358275",
-    appId: "1:843837358275:web:ee38aa651e82e2525d6276"
-  };
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithRedirect,
+    getRedirectResult,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
+const firebaseConfig = {
+    apiKey: "AIzaSyDU1F5eJplYnQ7HrIBcxvK3jA3ZMECyq2w",
+    authDomain: "civicissuereporter-2fa6d.firebaseapp.com",
+    projectId: "civicissuereporter-2fa6d",
+    storageBucket: "civicissuereporter-2fa6d.firebasestorage.app",
+    messagingSenderId: "1008677836126",
+    appId: "1:1008677836126:web:1b1660f450d8d6657aabcf"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const googleProvider = new GoogleAuthProvider();
+
+export {
+    app,
+    auth,
+    googleProvider,
+    signInWithRedirect,
+    getRedirectResult,
+    signOut,
+    onAuthStateChanged
+};
