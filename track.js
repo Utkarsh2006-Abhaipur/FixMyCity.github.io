@@ -176,10 +176,13 @@ async function trackIssue() {
         reportResultCard.classList.add("show");
 
     } catch (error) {
-        console.error(
-            "Tracking error:",
-            error
-        );
+    console.error("Tracking error:", error);
+
+    alert(
+        "Unable to retrieve the report: " +
+        (error.code || error.message)
+    );
+}
 
         alert(
             "Unable to retrieve the report. Please try again."
