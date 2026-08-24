@@ -3188,3 +3188,16 @@ body {
 
     text-align: center;
 }
+
+
+/* =========================
+   HOME HERO POSITION FIX
+========================= */
+
+@media (min-width: 769px) {
+
+    .hero-content {
+        transform: translateY(55px);
+    }
+
+}
