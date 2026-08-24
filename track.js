@@ -200,14 +200,14 @@ trackBtn.addEventListener(
     trackIssue
 );
 
-// trackingIdInput.addEventListener(
-//     "keydown",
-//     event => {
-//         if (event.key === "Enter") {
-//             trackIssue();
-//         }
-//     }
-// );
+trackingIdInput.addEventListener(
+    "keydown",
+    event => {
+        if (event.key === "Enter") {
+            trackIssue();
+        }
+    }
+);
 
 trackingIdInput.addEventListener("input", () => {
     trackingIdInput.value =
