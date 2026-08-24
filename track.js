@@ -176,13 +176,10 @@ async function trackIssue() {
         reportResultCard.classList.add("show");
 
     } catch (error) {
-    console.error("Tracking error:", error);
-
-    alert(
-        "Unable to retrieve the report: " +
-        (error.code || error.message)
-    );
-}
+        console.error(
+            "Tracking error:",
+            error
+        );
 
         alert(
             "Unable to retrieve the report. Please try again."
@@ -203,14 +200,14 @@ trackBtn.addEventListener(
     trackIssue
 );
 
-trackingIdInput.addEventListener(
-    "keydown",
-    event => {
-        if (event.key === "Enter") {
-            trackIssue();
-        }
-    }
-);
+// trackingIdInput.addEventListener(
+//     "keydown",
+//     event => {
+//         if (event.key === "Enter") {
+//             trackIssue();
+//         }
+//     }
+// );
 
 trackingIdInput.addEventListener("input", () => {
     trackingIdInput.value =
