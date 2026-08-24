@@ -3197,7 +3197,7 @@ body {
 @media (min-width: 769px) {
 
     .hero-content {
-        transform: translateY(55px);
+        transform: translateY(75px);
     }
 
 }
