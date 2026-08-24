@@ -1,383 +1,391 @@
-let issues = JSON.parse(localStorage.getItem("issues")) || [];
+import { auth } from "./firebase.js";
 
-// ================================
-// PAGE NAVIGATION
-// ================================
-function showPage(pageId) {
-    const pages = document.querySelectorAll(".page");
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-    pages.forEach(function (page) {
-        page.classList.remove("active");
-    });
 
-    const targetPage = document.getElementById(pageId);
+const ADMIN_EMAIL =
+    "utkarshkumarabhaipur@gmail.com";
 
-    if (!targetPage) {
-        return;
-    }
 
-    targetPage.classList.add("active");
+/* =========================
+   MOBILE MENU
+========================= */
 
-    // Refresh data whenever a page is opened
-    displayReports();
-    displayAdminIssues();
-    updateStatistics();
+const menuBtn =
+    document.getElementById("menuBtn");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+const navlinks =
+    document.getElementById("navlinks");
+
+
+if (menuBtn && navlinks) {
+
+    menuBtn.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+
+    menuBtn.addEventListener(
+        "click",
+
+        () => {
+
+            const isOpen =
+                navlinks.classList.toggle(
+                    "active"
+                );
+
+
+            menuBtn.classList.toggle(
+                "active",
+                isOpen
+            );
+
+
+            menuBtn.setAttribute(
+                "aria-expanded",
+                isOpen
+            );
+
+        }
+
+    );
+
+
+    /*
+       Close mobile menu
+       after clicking a link/button
+    */
+
+    navlinks.addEventListener(
+        "click",
+
+        event => {
+
+            if (
+                event.target.closest(
+                    "a, button"
+                )
+            ) {
+
+                navlinks.classList.remove(
+                    "active"
+                );
+
+
+                menuBtn.classList.remove(
+                    "active"
+                );
+
+
+                menuBtn.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+    );
+
+
+    /*
+       Close menu if screen
+       becomes desktop size
+    */
+
+    window.addEventListener(
+        "resize",
+
+        () => {
+
+            if (
+                window.innerWidth > 768
+            ) {
+
+                navlinks.classList.remove(
+                    "active"
+                );
+
+
+                menuBtn.classList.remove(
+                    "active"
+                );
+
+
+                menuBtn.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+    );
+
 }
 
 
-// ================================
-// REPORT ISSUE FORM
-// ================================
-const issueForm = document.getElementById("issueForm");
+/* =========================
+   NAVBAR SCROLL EFFECT
+========================= */
 
-if (issueForm) {
-    issueForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+const navWrapper =
+    document.querySelector(
+        ".nav-wrapper"
+    );
 
-        const title = document.getElementById("title").value.trim();
-        const category = document.getElementById("category").value;
-        const description = document.getElementById("description").value.trim();
-        const location = document.getElementById("location").value.trim();
 
-        // Unique Issue ID
-        const issueId = "FMC-" + Date.now();
+if (navWrapper) {
 
-        const newIssue = {
-            id: issueId,
-            title: title,
-            category: category,
-            description: description,
-            location: location,
-            status: "Reported",
-            date: new Date().toLocaleDateString()
-        };
+    const updateNavbar = () => {
 
-        // Save issue
-        issues.push(newIssue);
+        if (
+            window.scrollY > 30
+        ) {
 
-        localStorage.setItem(
-            "issues",
-            JSON.stringify(issues)
-        );
+            navWrapper.classList.add(
+                "scrolled"
+            );
 
-        alert(
-            "Issue reported successfully!\n\nYour Issue ID is: " +
-            issueId
-        );
+        }
 
-        // Reset form
-        issueForm.reset();
+        else {
 
-        // Update statistics
-        updateStatistics();
+            navWrapper.classList.remove(
+                "scrolled"
+            );
 
-        // Open My Reports page
-        showPage("reports");
-    });
+        }
+
+    };
+
+
+    window.addEventListener(
+        "scroll",
+        updateNavbar
+    );
+
+
+    updateNavbar();
+
 }
 
 
-// ================================
-// DISPLAY USER REPORTS
-// ================================
-function displayReports() {
-    const reportsList =
-        document.getElementById("reportsList");
+/* =========================
+   AUTHENTICATION NAVBAR
+========================= */
 
-    if (!reportsList) {
-        return;
-    }
+onAuthStateChanged(
+    auth,
 
-    reportsList.innerHTML = "";
+    user => {
 
-    if (issues.length === 0) {
-        reportsList.innerHTML =
-            "<p class='empty-message'>No issues reported yet.</p>";
-
-        return;
-    }
-
-    issues.forEach(function (issue) {
-
-        const statusClass = issue.status
-            .toLowerCase()
-            .replace(/\s+/g, "-");
-
-        const card = document.createElement("div");
-
-        card.classList.add("issue-card");
-
-        card.innerHTML = `
-            <h3>${escapeHTML(issue.title)}</h3>
-
-            <p>
-                <strong>Issue ID:</strong>
-                ${escapeHTML(issue.id)}
-            </p>
-
-            <p>
-                <strong>Category:</strong>
-                ${escapeHTML(issue.category)}
-            </p>
-
-            <p>
-                <strong>Description:</strong>
-                ${escapeHTML(issue.description)}
-            </p>
-
-            <p>
-                <strong>Location:</strong>
-                ${escapeHTML(issue.location)}
-            </p>
-
-            <p>
-                <strong>Date:</strong>
-                ${escapeHTML(issue.date)}
-            </p>
-
-            <span class="status ${statusClass}">
-                ${escapeHTML(issue.status)}
-            </span>
-        `;
-
-        reportsList.appendChild(card);
-    });
-}
+        const navList =
+            document.querySelector(
+                ".navlinks ul"
+            );
 
 
-// ================================
-// ADMIN DASHBOARD
-// ================================
-function displayAdminIssues() {
-    const adminIssues =
-        document.getElementById("adminIssues");
+        if (!navList) {
+            return;
+        }
 
-    if (!adminIssues) {
-        return;
-    }
 
-    adminIssues.innerHTML = "";
+        /*
+           Remove previously generated
+           authentication items
+        */
 
-    if (issues.length === 0) {
-        adminIssues.innerHTML =
-            "<p class='empty-message'>No issues available.</p>";
+        const existingAuthItem =
+            document.getElementById(
+                "authNavItem"
+            );
 
-        return;
-    }
 
-    issues.forEach(function (issue, index) {
+        if (existingAuthItem) {
 
-        const statusClass = issue.status
-            .toLowerCase()
-            .replace(/\s+/g, "-");
+            existingAuthItem.remove();
 
-        const card = document.createElement("div");
+        }
 
-        card.classList.add("issue-card");
 
-        card.innerHTML = `
-            <h3>${escapeHTML(issue.title)}</h3>
+        const existingDashboard =
+            document.getElementById(
+                "dashboardNavItem"
+            );
 
-            <p>
-                <strong>ID:</strong>
-                ${escapeHTML(issue.id)}
-            </p>
 
-            <p>
-                <strong>Category:</strong>
-                ${escapeHTML(issue.category)}
-            </p>
+        if (existingDashboard) {
 
-            <p>
-                <strong>Description:</strong>
-                ${escapeHTML(issue.description)}
-            </p>
+            existingDashboard.remove();
 
-            <p>
-                <strong>Location:</strong>
-                ${escapeHTML(issue.location)}
-            </p>
+        }
 
-            <p>
-                <strong>Date:</strong>
-                ${escapeHTML(issue.date)}
-            </p>
 
-            <span class="status ${statusClass}">
-                ${escapeHTML(issue.status)}
-            </span>
+        /* =========================
+           LOGGED OUT
+        ========================= */
 
-            <select
-                class="status-select"
-                onchange="changeStatus(${index}, this.value)"
+        if (!user) {
+
+            const loginItem =
+                document.createElement(
+                    "li"
+                );
+
+
+            loginItem.id =
+                "authNavItem";
+
+
+            loginItem.innerHTML = `
+                <a
+                    href="login.html"
+                    class="login-btn"
+                >
+                    Login
+                </a>
+            `;
+
+
+            navList.appendChild(
+                loginItem
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADMIN DASHBOARD
+        ========================= */
+
+        if (
+            user.email &&
+            user.email.toLowerCase() ===
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            const dashboardItem =
+                document.createElement(
+                    "li"
+                );
+
+
+            dashboardItem.id =
+                "dashboardNavItem";
+
+
+            dashboardItem.innerHTML = `
+                <a
+                    href="admin.html"
+                    class="nav-link"
+                >
+                    Dashboard
+                </a>
+            `;
+
+
+            navList.appendChild(
+                dashboardItem
+            );
+
+        }
+
+
+        /* =========================
+           LOGOUT BUTTON
+        ========================= */
+
+        const logoutItem =
+            document.createElement(
+                "li"
+            );
+
+
+        logoutItem.id =
+            "authNavItem";
+
+
+        logoutItem.innerHTML = `
+            <button
+                type="button"
+                class="login-btn logout-btn"
             >
-                <option value="Reported">
-                    Reported
-                </option>
-
-                <option value="In Progress">
-                    In Progress
-                </option>
-
-                <option value="Resolved">
-                    Resolved
-                </option>
-            </select>
+                Logout
+            </button>
         `;
 
-        // Set current status
-        const select = card.querySelector(".status-select");
 
-        if (select) {
-            select.value = issue.status;
-        }
-
-        adminIssues.appendChild(card);
-    });
-}
+        navList.appendChild(
+            logoutItem
+        );
 
 
-// ================================
-// CHANGE ISSUE STATUS
-// ================================
-function changeStatus(index, newStatus) {
+        const logoutBtn =
+            logoutItem.querySelector(
+                ".logout-btn"
+            );
 
-    if (!issues[index]) {
-        return;
+
+        logoutBtn.addEventListener(
+            "click",
+
+            async () => {
+
+                try {
+
+                    logoutBtn.disabled =
+                        true;
+
+
+                    logoutBtn.textContent =
+                        "Logging out...";
+
+
+                    await signOut(auth);
+
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Unable to logout. Please try again."
+                    );
+
+
+                    logoutBtn.disabled =
+                        false;
+
+
+                    logoutBtn.textContent =
+                        "Logout";
+
+                }
+
+            }
+
+        );
+
     }
 
-    issues[index].status = newStatus;
-
-    // Save updated data
-    localStorage.setItem(
-        "issues",
-        JSON.stringify(issues)
-    );
-
-    // Refresh pages and statistics
-    displayReports();
-    displayAdminIssues();
-    updateStatistics();
-}
-
-
-// ================================
-// UPDATE HERO STATISTICS
-// ================================
-function updateStatistics() {
-
-    const total = issues.length;
-
-    let reported = 0;
-    let pending = 0;
-    let resolved = 0;
-
-    issues.forEach(function (issue) {
-
-        if (issue.status === "Reported") {
-            reported++;
-
-        } else if (issue.status === "In Progress") {
-            pending++;
-
-        } else if (issue.status === "Resolved") {
-            resolved++;
-        }
-    });
-
-    setText("totalReports", total);
-    setText("reportedCount", reported);
-    setText("pendingCount", pending);
-    setText("resolvedCount", resolved);
-}
-
-
-// ================================
-// HELPER: SET TEXT
-// ================================
-function setText(id, value) {
-
-    const element = document.getElementById(id);
-
-    if (element) {
-        element.textContent = value;
-    }
-}
-
-
-// ================================
-// SECURITY: ESCAPE HTML
-// ================================
-function escapeHTML(value) {
-
-    const div = document.createElement("div");
-
-    div.textContent = value ?? "";
-
-    return div.innerHTML;
-}
-
-
-// ================================
-// HERO BUTTONS
-// ================================
-const reportButton =
-    document.getElementById("heroReportBtn");
-
-const exploreButton =
-    document.getElementById("heroExploreBtn");
-
-
-if (reportButton) {
-
-    reportButton.addEventListener(
-        "click",
-        function () {
-            showPage("report");
-        }
-    );
-}
-
-
-if (exploreButton) {
-
-    exploreButton.addEventListener(
-        "click",
-        function () {
-            showPage("reports");
-        }
-    );
-}
-const loginToggle = document.getElementById("loginToggle");
-const loginDropdown = document.querySelector(".login-dropdown");
-
-loginToggle.addEventListener("click", function (event) {
-    event.stopPropagation();
-
-    loginDropdown.classList.toggle("active");
-});
-
-document.addEventListener("click", function (event) {
-
-    if (!loginDropdown.contains(event.target)) {
-        loginDropdown.classList.remove("active");
-    }
-
-});
-
-function closeLoginMenu() {
-    loginDropdown.classList.remove("active");
-}
-
-
-// ================================
-// INITIAL LOAD
-// ================================
-displayReports();
-displayAdminIssues();
-updateStatistics();
+);

@@ -1,414 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CityCare</title>
-
+    <title>CityCare | Home</title>
     <link rel="stylesheet" href="style.css">
 
-    <!-- Font Awesome Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    >
 </head>
-
 <body>
 
-    <!-- NAVIGATION BAR  -->
+    <!-- HERO SECTION -->
+    <section class="hero">
 
-    <nav>
-    
-        <div class="logo" onclick="showPage('home')">
-            <img src="logo.png" alt="">
-        </div>
-    
-        <div class="nav-links">
-    
-            <button onclick="showPage('home')">
-                Home
-            </button>
-    
-            <button onclick="showPage('report')">
-                Report Issue
-            </button>
-    
-            <button onclick="showPage('reports')">
-                My Reports
-            </button>
-    
-            <!-- LOGIN -->
-            <div class="login-dropdown">
-    
-                <button class="login-btn" type="button" onclick="window.location.href='login.html'">
-                    Login
-                    <span class="dropdown-arrow">›</span>
-                </button>
-    
-            </div>
-    
-    
-        </div>
-    
-    </nav>
+        <!-- NAVIGATION INSIDE HERO -->
+        <header class="nav-wrapper">
+            <nav class="navbar">
 
+                <a href="index.html" class="logo">
+                    <img src="logo.png" alt="CityCare Logo">
+                    <span class="logo-text">CityCare</span>
+                </a>
 
-    <!--  HOME PAGE  -->
+                <div class="navlinks" id="navlinks">
+                    <ul>
+                        <li>
+                            <a href="index.html" class="nav-link active">
+                                Home
+                            </a>
+                        </li>
 
-    <section id="home" class="page active">
+                        <li>
+                            <a href="report.html" class="nav-link">
+                                Report Issue
+                            </a>
+                        </li>
 
+                        <li>
+                            <a href="track.html" class="nav-link">
+                                Track Issue
+                            </a>
+                        </li>
 
-        <!--  HERO SECTION  -->
-
-        <section class="hero-section">
-
-            <div class="hero-overlay"></div>
-
-
-            <div class="hero-content">
-
-                <div class="hero-badge">
-
-                    <span class="status-dot"></span>
-
-                    Civic Issue Reporting Platform
-
+                        <!-- <li>
+                            <a href="login.html" class="login-btn">
+                                Login
+                            </a>
+                        </li> -->
+                    </ul>
                 </div>
 
-
-                <h1>
-                    Together, We Build a
-                    <span>Better City.</span>
-                </h1>
-
-
-                <p>
-                    Report civic problems, track their progress, and help make
-                    your city cleaner, safer and better for everyone.
-                </p>
-
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="hero-primary"
-                        id="heroReportBtn"
-                        type="button"
-                    >
-                        Report an Issue
-                        <span>→</span>
-                    </button>
-
-
-                    <button
-                        class="hero-secondary"
-                        id="heroExploreBtn"
-                        type="button"
-                    >
-                        Explore Reports
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- Decorative Elements -->
-
-            <div class="hero-orb orb-1"></div>
-
-            <div class="hero-orb orb-2"></div>
-
-            <div class="hero-grid"></div>
-
-        </section>
-
-
-
-        <!--  CITY STATISTICS  -->
-
-        <section class="city-stats-section">
-
-            <div class="stats-container">
-
-
-                <div class="stats-intro">
-
-                    <span class="section-label">
-                        CITY ACTIVITY
-                    </span>
-
-
-                    <h2>
-                        Making Every Report
-                        <span>Count.</span>
-                    </h2>
-
-
-                    <p>
-                        Track the impact of citizens reporting issues
-                        and authorities resolving them.
-                    </p>
-
-                </div>
-
-
-
-                <div class="stats-grid">
-
-
-                    <!-- TOTAL REPORTS -->
-
-                    <div class="stat-card total-card">
-
-                        <div class="stat-icon">
-                            <i class="fa fa-file-text-o"></i>
-                        </div>
-
-
-                        <div class="stat-info">
-
-                            <span>Total Reports</span>
-
-                            <strong id="totalReports">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- REPORTED -->
-
-                    <div class="stat-card reported-card">
-
-                        <div class="stat-icon">
-                            <i class="fa fa-bullhorn"></i>
-                        </div>
-
-
-                        <div class="stat-info">
-
-                            <span>Reported</span>
-
-                            <strong id="reportedCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PENDING -->
-
-                    <div class="stat-card pending-card">
-
-                        <div class="stat-icon">
-                            <i class="fa fa-clock-o"></i>
-                        </div>
-
-
-                        <div class="stat-info">
-
-                            <span>Pending</span>
-
-                            <strong id="pendingCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- RESOLVED -->
-
-                    <div class="stat-card resolved-card">
-
-                        <div class="stat-icon">
-                            <i class="fa fa-check"></i>
-                        </div>
-
-
-                        <div class="stat-info">
-
-                            <span>Resolved</span>
-
-                            <strong id="resolvedCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-    </section>
-
-
-
-    <!--  REPORT ISSUE PAGE  -->
-
-    <section id="report" class="page">
-
-        <div class="form-container">
-
-            <h2>
-                Report a Civic Issue
-            </h2>
-
-
-            <form id="issueForm">
-
-
-                <!-- ISSUE TITLE -->
-
-                <label for="title">
-                    Issue Title
-                </label>
-
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Type issue here..."
-                    required
-                >
-
-
-
-                <!-- CATEGORY -->
-
-                <label for="category">
-                    Category
-                </label>
-
-                <select id="category" required>
-
-                    <option value="">
-                        Select Category
-                    </option>
-
-                    <option value="Road">
-                        Road
-                    </option>
-
-                    <option value="Garbage">
-                        Garbage
-                    </option>
-
-                    <option value="Streetlight">
-                        Streetlight
-                    </option>
-
-                    <option value="Water">
-                        Water Problem
-                    </option>
-
-                    <option value="Other">
-                        Other
-                    </option>
-
-                </select>
-
-
-
-                <!-- DESCRIPTION -->
-
-                <label for="description">
-                    Description
-                </label>
-
-                <textarea
-                    id="description"
-                    placeholder="Describe the problem..."
-                    required
-                ></textarea>
-
-
-
-                <!-- LOCATION -->
-
-                <label for="location">
-                    Location
-                </label>
-
-                <input
-                    type="text"
-                    id="location"
-                    placeholder="Choose your location"
-                    required
-                >
-
-
-
-                <!-- IMAGE -->
-
-                <label for="image">
-                    Upload Image
-                </label>
-
-                <input
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                >
-
-
-
-                <!-- SUBMIT -->
-
-                <button
-                    type="submit"
-                    class="primary-btn"
-                >
-                    Submit Issue
+                <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
 
-            </form>
+            </nav>
+        </header>
 
-        </div>
+        <!-- HERO CONTENT -->
+        <div class="hero-content">
 
-    </section>
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                Civic Issue Reporting Platform
+            </div>
 
-
-
-    <!-- MY REPORTS PAGE -->
-
-    <section id="reports" class="page">
-
-        <div class="container">
-
-            <h2>
-                My Reported Issues
-            </h2>
+            <h1>
+                Together, We Build a
+                <span>Better City.</span>
+            </h1>
 
             <p>
-                Track the current status of your reported civic issues.
+                Report civic problems, track their progress, and help make your city cleaner, safer, and better for everyone.
             </p>
 
+            <div class="hero-buttons">
 
-            <div
-                id="reportsList"
-                class="issues-grid"
-            >
+                <a href="report.html" class="hero-primary">
+                    Report an Issue
+                    <span>→</span>
+                </a>
 
-                <!-- JavaScript will add issues here -->
+                <a href="track.html" class="hero-secondary">
+                    Track an Issue
+                </a>
 
             </div>
 
@@ -417,209 +93,266 @@
     </section>
 
 
-
-    <!-- ADMIN PAGE -->
-
-    <section id="admin" class="page">
-
-        <div class="container">
-
-            <h2>
-                Authority Dashboard
-            </h2>
-
-
+    <!-- HOW IT WORKS SECTION -->
+<section class="how-it-works">
+    <div class="how-container">
+        <div class="section-heading">
+            <span class="section-label">HOW CITYCARE WORKS</span>
+            <h2>From Reporting to <span>Resolution.</span></h2>
             <p>
-                Manage all reported civic issues.
+                CityCare makes it simple to report civic problems and stay informed until they are resolved.
             </p>
-
-
-            <div
-                id="adminIssues"
-                class="issues-grid"
-            >
-
-                <!-- JavaScript will add admin issues here -->
-
-            </div>
-
         </div>
 
-    </section>
+        <div class="steps-container">
 
+            <div class="step-card">
+                <div class="step-number">01</div>
 
+                <div class="step-icon">!</div>
 
-    <!-- FOOTER  -->
-
-    <footer class="fixmycity-footer">
-
-
-        <div class="footer-container">
-
-
-            <!-- BRAND -->
-
-            <div class="footer-column footer-brand">
-
-             <img src="logo.png" alt="">
-
+                <h3>Report an Issue</h3>
 
                 <p>
-                    A platform that connects citizens with local
-                    authorities to make cities better, one report at a time.
+                    Submit details about a civic problem and provide its location and supporting information.
                 </p>
-
-
             </div>
 
+            <div class="step-line"></div>
 
+            <div class="step-card">
+                <div class="step-number">02</div>
 
-            <!-- PLATFORM -->
+                <div class="step-icon">◉</div>
 
-            <div class="footer-column">
+                <h3>Track Progress</h3>
 
-                <h3>
-                    Platform
-                </h3>
-
-
-                <a
-                    href="#"
-                    onclick="showPage('home'); return false;"
-                >
-                    Home
-                </a>
-
-
-                <a
-                    href="#"
-                    onclick="showPage('report'); return false;"
-                >
-                    Report Issue
-                </a>
-
-
-                <a
-                    href="#"
-                    onclick="showPage('reports'); return false;"
-                >
-                    View Reports
-                </a>
-
-
-                <a href="#">
-                    How It Works
-                </a>
-
-            </div>
-
-
-
-            <!-- ISSUE CATEGORIES -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Issue Categories
-                </h3>
-
-
-                <a href="#">
-                    Road Damage
-                </a>
-
-
-                <a href="#">
-                    Garbage
-                </a>
-
-
-                <a href="#">
-                    Water Leakage
-                </a>
-
-
-                <a href="#">
-                    Streetlights
-                </a>
-
-            </div>
-
-
-
-            <!-- CONTACT -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Stay Connected
-                </h3>
-
-
-                <p class="footer-contact-text">
-                    Get updates about your reports and city activity.
+                <p>
+                    Follow the status of your report and stay updated as it moves through the resolution process.
                 </p>
-
-
-                <div class="footer-email">
-
-                    <input
-                        type="email"
-                        placeholder="Your email address"
-                    >
-
-
-                    <button type="button">
-                        →
-                    </button>
-
-                </div>
-
             </div>
 
+            <div class="step-line"></div>
+
+            <div class="step-card">
+                <div class="step-number">03</div>
+
+                <div class="step-icon">✓</div>
+
+                <h3>See the Change</h3>
+
+                <p>
+                    Get notified when the issue is resolved and see the impact of citizen participation.
+                </p>
+            </div>
 
         </div>
+    </div>
+</section>
 
 
 
-        <!-- FOOTER BOTTOM -->
+<!-- LIVE CITY IMPACT -->
+<section class="city-impact">
+    <div class="impact-container">
 
-        <div class="footer-bottom">
-
-            <p>
-                © 2026 CityCare. All rights reserved.
-            </p>
-
-
+        <div class="impact-header">
             <div>
+                <span class="section-label">CITY ACTIVITY</span>
+                <h2>Every Report Can Create <span>Real Change.</span></h2>
+            </div>
 
-                <a href="#">
-                    Made with Love
-                </a>
+            <p>
+                See how citizens and local authorities are working together to identify and resolve civic issues.
+            </p>
+        </div>
 
+        <div class="impact-grid">
+
+            <div class="impact-card">
+                <div class="impact-icon">▣</div>
+                <div class="impact-data">
+                    <span>Total Issues</span>
+                    <h3 id="totalIssues">0</h3>
+                </div>
+            </div>
+
+            <div class="impact-card">
+                <div class="impact-icon">◷</div>
+                <div class="impact-data">
+                    <span>In Progress</span>
+                    <h3 id="inProgressIssues">0</h3>
+                </div>
+            </div>
+
+            <div class="impact-card">
+                <div class="impact-icon">✓</div>
+                <div class="impact-data">
+                    <span>Issues Resolved</span>
+                    <h3 id="resolvedIssues">0</h3>
+                </div>
+            </div>
+
+            <div class="impact-card highlight-card">
+                <div class="impact-icon">↗</div>
+                <div class="impact-data">
+                    <span>Resolution Rate</span>
+                    <h3 id="resolutionRate">0%</h3>
+                </div>
             </div>
 
         </div>
 
-
-    </footer>
-
-
-    <button type="button" id="logoutBtn" onclick="logoutUser()">
-        <i class="fa fa-sign-out"></i>
-        Logout
-    </button>
+    </div>
+</section>
 
 
 
-    <!-- JAVASCRIPT -->
 
-    <script src="script.js"></script>
+<!-- ISSUE CATEGORIES -->
+<section class="issue-categories">
+    <div class="categories-container">
 
-    <script type="module" src="auth.js"></script>
-    
-    <script type="module" src="report.js"></script>
+        <div class="section-heading categories-heading">
+            <span class="section-label">WHAT CAN YOU REPORT?</span>
+            <h2>Every Problem <span>Deserves Attention.</span></h2>
+            <p>
+                From damaged roads to water problems, report the civic issues that affect your everyday life.
+            </p>
+        </div>
+
+        <div class="categories-grid">
+
+            <a href="report.html" class="category-card">
+                <div class="category-icon">▱</div>
+                <h3>Road Damage</h3>
+                <p>Potholes, damaged roads, broken footpaths, and unsafe streets.</p>
+                <span class="category-arrow">→</span>
+            </a>
+
+            <a href="report.html" class="category-card">
+                <div class="category-icon">♻</div>
+                <h3>Garbage & Waste</h3>
+                <p>Overflowing bins, illegal dumping, and uncollected waste.</p>
+                <span class="category-arrow">→</span>
+            </a>
+
+            <a href="report.html" class="category-card">
+                <div class="category-icon">≈</div>
+                <h3>Water Problems</h3>
+                <p>Water leakage, supply issues, drainage, and flooding.</p>
+                <span class="category-arrow">→</span>
+            </a>
+
+            <a href="report.html" class="category-card">
+                <div class="category-icon">✦</div>
+                <h3>Streetlights</h3>
+                <p>Broken, damaged, or non-functioning streetlights.</p>
+                <span class="category-arrow">→</span>
+            </a>
+
+            <a href="report.html" class="category-card">
+                <div class="category-icon">!</div>
+                <h3>Other Issues</h3>
+                <p>Report any other civic problem affecting your locality.</p>
+                <span class="category-arrow">→</span>
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- CALL TO ACTION -->
+<section class="cta-section">
+    <div class="cta-container">
+        <div class="cta-content">
+            <span class="cta-label">MAKE A DIFFERENCE</span>
+            <h2>See a Problem? <span>Be Part of the Solution.</span></h2>
+            <p>
+                Your report can help bring attention to civic problems and contribute to a cleaner, safer, and better city.
+            </p>
+            <div class="cta-buttons">
+                <a href="report.html" class="cta-primary">
+                    Report an Issue
+                    <span>→</span>
+                </a>
+                <a href="track.html" class="cta-secondary">
+                    Track Your Issue
+                </a>
+            </div>
+        </div>
+        <div class="cta-visual">
+            <div class="cta-circle circle-one"></div>
+            <div class="cta-circle circle-two"></div>
+            <div class="cta-card">
+                <div class="cta-card-icon">✓</div>
+                <div>
+                    <span>CityCare</span>
+                    <strong>Every report matters.</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <img src="logo.png" alt="CityCare Logo">
+                <span>CityCare</span>
+            </div>
+            <p>
+                Helping citizens report civic problems and work towards cleaner, safer, and better cities.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Platform</h3>
+                <a href="index.html">Home</a>
+                <a href="report.html">Report Issue</a>
+                <a href="track.html">Track Issue</a>
+                <a href="login.html">Login</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>Report Issues</h3>
+                <a href="report.html">Road Damage</a>
+                <a href="report.html">Garbage & Waste</a>
+                <a href="report.html">Water Problems</a>
+                <a href="report.html">Streetlights</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>Get Started</h3>
+                <p class="footer-text">
+                    See a civic problem in your area? Report it and help bring attention to it.
+                </p>
+                <a href="report.html" class="footer-report-btn">
+                    Report an Issue <span>→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 CityCare. All rights reserved.</p>
+
+        <div class="footer-bottom-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </div>
+</footer>
+
+    <script type="module" src="script.js"></script>
 
 </body>
-
 </html>
